@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://new.webservice.namespace" targetNamespace="http://new.webservice.namespace">
+    <!-- информация о входящих параметрах -->
+    <wsdl:message name="getStockRequest">
+        <wsdl:part name="id" type="xs:string"/>
+    </wsdl:message>
+    <!-- информация о исходящих параметрах -->
+    <wsdl:message name="getStockResponse">
+        <wsdl:part name="Result" type="xs:integer"/>
+    </wsdl:message>
+    
+    <wsdl:portType name="StockPortType">
+        <wsdl:operation name="getStock">
+            <!-- искать иформацию о входящих параметрах --> 
+            <wsdl:input message="tns:getStockRequest"/>
+            <!-- искать иформацию о исходящих параметрах параметрах --> 
+            <wsdl:output message="tns:getStockResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    
+    <wsdl:binding name="StockBinding" type="tns:StockPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <!-- условно, тебе доступна процедура getStock принимающие значени операции искать StockPortType-->
+        <wsdl:operation name="getStock">
+            <soap:operation soapAction="urn:#getStock"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="StockService">
+        <!-- Тут говорится что в методе location где находится сервер, binding - атрибут который указывает где искать информацию о операциях -->
+        <wsdl:port name="StockPort" binding="tns:StockBinding">
+            <soap:address location="http://soap/server.php"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

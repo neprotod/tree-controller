@@ -1,0 +1,168 @@
+<?php
+/*
+ * Выполненире всего кода
+ */
+class Core_Request{
+    
+    // Для хранения роутера
+    public $router;
+    
+    // Для хранения роутера
+    static public $design;
+    // Здесь хранится URL для запроса
+    //private $url;
+    
+    // Здесь хранится модуль для заполнения контента
+    //private $module;
+    /*********Method***********/
+    
+    /*Static*/
+    /*
+    * Создает образец объектка
+    *
+    * @return this
+    */
+    static function factory(){
+        $request = new Request();
+        return $request;
+    }
+    
+    /*no static*/
+    /*
+    * Конструктор класса, заполняем начальные параметры, вызывает rout, 
+    * определят текущую тему, возможно в будущем будет кешировать станицу.
+    *
+    * @return void
+    */
+    function __construct(){
+        $this->socket = Module::factory('socket',TRUE);
+        $this->main = Module::factory('main',TRUE);
+        
+        Request::$design = Module::factory('design', TRUE);
+    }
+    
+    function render(){
+        $url = Url::instance();
+        if(!empty($url->instance()->socket))
+            $this->socket->conection($url->instance()->socket);
+        else
+            $this->main->fetch();
+    }
+    
+    function execute(){
+        
+        // Буфиринизируем все данные
+        ob_start();
+        $this->render();
+        $buffer = ob_get_clean();
+        
+        // Наченаем строить вывод
+        //header('Content-Type: text/html; charset=utf-8');
+        echo $buffer;
+    }
+    /*************************/
+    /*Вспомогательные функции*/
+    /*************************/
+    /**
+    * Возвращает переменную _POST, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
+    * Второй параметр $type может иметь такие значения: integer, string, boolean
+    * Если $type не задан, возвращает переменную в чистом виде
+    */
+    static function post($name = null, $type = null){
+        $val = null;
+        if(!empty($name) && isset($_POST[$name]))
+            $val = $_POST[$name];
+        elseif(empty($name))
+            $val = file_get_contents('php://input');
+            
+        if($type == 'string')
+            return strval(preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val));
+            
+        if($type == 'integer')
+            return intval($val);
+
+        if($type == 'boolean')
+            return !empty($val);
+
+        return $val;
+    }
+    
+    /**
+    * Возвращает переменную _GET, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
+    * Второй параметр $type может иметь такие значения: integer, string, boolean
+    * Если $type не задан, возвращает переменную в чистом виде
+    */
+    
+    static function get($name, $type = null){
+        $val = null;
+        if(isset($_GET[$name]))
+            $val = $_GET[$name];
+        if(!empty($type) && is_array($val))
+            $val = reset($val);
+        
+        if($type == 'string')
+            return strval(preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val));
+            
+        if($type == 'integer')
+            return intval($val);
+
+        if($type == 'boolean')
+            return !empty($val);
+            
+        return $val;
+    }
+    
+    /**
+    * Проверка сессии
+    */
+    static function check_session(){
+        if(!empty($_POST)){
+            if(empty($_POST['session_id']) || $_POST['session_id'] != session_id()){
+                unset($_POST);
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    static function method($method = null){
+        if(!empty($method))
+            return strtolower($_SERVER['REQUEST_METHOD']) == strtolower($method);
+        return $_SERVER['REQUEST_METHOD'];
+    }
+    
+   /**
+    * Возвращает переменную _FILES
+    * Обычно переменные _FILES являются двухмерными массивами, поэтому можно указать второй параметр,
+    * например, чтобы получить имя загруженного файла: $filename = Request::files('myfile', 'name');
+    */
+    static function files($name, $name2 = null){
+        if(!empty($name2) && !empty($_FILES[$name][$name2]))
+            return $_FILES[$name][$name2];
+        elseif(empty($name2) && !empty($_FILES[$name]))
+            return $_FILES[$name];
+        else
+            return null;
+    }
+    
+    /*Выдача параметров*/
+    static function param($param, $escape = NULL,$return = NULL,$charset = 'UTF-8'){
+        if(isset($param) AND !empty($param)){
+            if($escape === TRUE AND is_string($param))
+                return htmlentities(strip_tags($param),ENT_QUOTES,$charset);
+
+            return $param;
+        }else{
+            return $return;
+        }
+    }
+    /*Удаляет значение и возвращает результат*/
+    static function unsets(&$param){
+        if(!empty($param)){
+            $get = $param;
+            unset($param);
+            return $get;
+        }
+    }
+    
+}

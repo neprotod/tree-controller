@@ -1,0 +1,55 @@
+# Follow symbolic links in this directory.
+Options Indexes FollowSymLinks
+
+# PHP 5, Apache 1 and 2.
+<IfModule mod_php5.c>
+  php_flag magic_quotes_gpc                 off
+  php_flag magic_quotes_sybase              off
+  #php_flag register_globals                 off
+  #php_flag session.auto_start               off
+  #php_value mbstring.http_input             pass
+  #php_value mbstring.http_output            pass
+  #php_flag mbstring.encoding_translation    off
+</IfModule>
+
+RewriteEngine On
+
+# Installation directory
+#RewriteBase /
+
+# Protect hidden files from being viewed
+<Files .*>
+    Order Deny,Allow
+    Deny From All
+</Files>
+
+# Protect application and system files from being viewed
+# RewriteRule ^(?:application|modules|system)\b.* index.php/$1 [L]
+# Запрет прямого выполнения php кода
+#RewriteRule ^(application|modules|system)\b.*\.php index.php/$1 [L]
+
+# Для убирания www
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# Защита от хотлинка
+    #RewriteCond %{HTTP_REFERER} !.*://[w\.]{0,4}(tree|php)[\.a-zA-Z]{0,5}/.* [NC]
+    #RewriteRule \.(jpg|jpeg|png|bmp|gif|swf|css|js)$ - [NC,F,L]
+
+
+
+
+# Allow any files or directories that exist to be displayed directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all other URLs to index.php/URL
+RewriteRule (.*) index.php/$1
+
+# FOR ADMIN PANEL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Для админ панели
+RewriteRule    ^admin.*  admin/index.php/$1 [L]
+#RewriteRule    ^0001/.*  0001/index.php/$1 [L]

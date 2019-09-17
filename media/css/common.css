@@ -1,0 +1,426 @@
+html,body{
+    /*width:100%;*/
+    height:100%;
+    padding:0;
+    margin:0;
+}
+#main{
+    padding:10px;
+}
+#view{
+    margin:20px;
+}
+#admin{
+    margin:20px;
+}
+#view .box{
+    margin:20px;
+}
+#admin .box{
+    margin:20px;
+}
+#admin .box .open{
+    z-index:1000;
+}
+.open{
+    position:fixed;
+    top:0%;
+    left:10%;
+    right:10%;
+    bottom:10%;
+    z-index:100;
+}
+.open iframe{
+    height:100%;
+    width:100%;
+    background:#fff;
+}
+.open .box{
+    height:100%;
+    width:100%;
+}
+.open .close{
+    padding:5px;
+}
+.open .close span{
+    color:blue;
+    border-bottom:1px solid;
+    cursor:pointer;
+    float:right;
+}
+textarea{
+    font-size:16px;
+    tab-size: 4;
+    -o-tab-size: 4;
+    -moz-tab-size: 4;
+}
+#mysql.form_left{
+    float:left;
+}
+#show_table{
+    float:left;
+    height:400px;
+    overflow:scroll;
+    margin-top:-100px;
+    margin-left:50px;
+    padding:10px;
+}
+#sql{
+    width:400px;
+    height:200px;
+    display:block;
+}
+.open .box{
+    padding-bottom:20px;
+}
+#result .box .table_name{
+    cursor:pointer;
+    display:inline;
+    border-bottom:1px dashed;
+}
+#result .box_result .column_body{
+    font-size:16px;
+}
+#result div{
+    padding:5px;
+}
+#result .select{
+    border:1px solid;
+}
+
+/*Форма*/
+#rename{
+    position:fixed;
+    top:50%;
+    left:35%;
+    right:35%;
+    text-align:center;
+}
+#rename .box{
+    display:inline;
+    position:relative;
+}
+#rename .box .close{
+    position:absolute;
+    top:-40px;
+    right:5px;
+    border:1px solid #000;
+    padding:0px 5px;
+    cursor:pointer;
+    background:#fff;
+}
+
+.table{
+    display:table;
+    margin-bottom:10px;
+}
+.table-row{
+    display:table-row;
+}
+.table-cell{
+    display:table-cell;
+    margin:5px 10px;
+}
+#directory .checkbox, #file .checkbox{
+    padding:0px 10px;
+}
+#directory .rename, #file .save, #file .rename{
+    border-bottom:1px dashed;
+    cursor:pointer;
+    display:inline-block;
+}
+
+/*Для окна выбора пути*/
+#file_result{
+    width:800px;
+    border:1px solid #000;
+    top:150px;
+    margin-top:-50px;
+    left:50%;
+    margin-left:-350px;
+    /*margin-top:-250px;*/
+    padding:33px 10px 10px 10px;
+    background:#fff;
+    position: fixed;
+    z-index:30000;
+    border-top:none;
+}
+#file_box{
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 100%;
+    left: 0;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index:29999;
+}
+#file_result .box{
+    overflow-y:scroll;
+    height:530px;
+    width:800px;
+}
+#file_result .submit_image{
+    position:absolute;
+    bottom:-20px;
+}
+
+/*Статусы*/
+#status_information input[name="status[id]"]{
+    width:61px;
+}
+#status_activate input[type="submit"]{
+    margin-top:10px;
+    background:red;
+    color:#fff;
+}
+#status_deactivate input[type="submit"]{
+    margin-top:10px;
+    background:#7d9412;
+    color:#fff;
+}
+.status_version input[type="text"]{
+    width:40px;
+}
+#box_module_error{
+    min-width:500px;
+    display:table;
+}
+/*Все модули*/
+#status_module{
+    float:left;
+    border:1px solid #000;
+    display:inline-block;
+    padding:5px;
+}
+/*обработка ошибок*/
+
+#status_error{
+    margin-left:20px; 
+    float:left;
+    border:1px solid #000; 
+    padding:5px;
+    position:relative;
+    max-width:70%;
+}
+#status_error .box{
+    border-bottom:1px solid #000;
+}
+#error_table .form{
+    float:left;
+    display:block;
+    width:100%;
+}
+#error_table .form:after{
+    display:block;
+    clear:both;
+    content:" ";
+    margin-bottom:20px;
+}
+
+/*работа с файлом*/
+#file_form .box{
+    height:450px;
+    width:100%;
+    margin-top:10px;
+    margin-bottom:10px;
+    overflow:auto;
+}
+#file_form #number{
+    float:left;
+    /*display:inline;*/
+    font-size:16px;
+    font-family: monospace;
+    padding-top:4px;
+    margin-right:10px;
+    width:20px;
+}
+#file_form #number .num{
+    width:25px;
+    overflow:hidden;
+}
+#source_textarea{
+    width:90%;
+    height:100%;
+    min-height:100%;
+    float:left;
+}
+.source_submit{
+    display:block;
+}
+#loadbar{
+    position: absolute;
+    margin-left: -50%;
+    width: 500px;
+}
+
+/*Формы информации*/
+#information .information_form{
+    display:inline;
+}
+#information .hidden{
+    visibility:hidden;
+}
+
+/*Для отслеживания изменения файлов*/
+#file_correlate .first_name{
+    border-bottom:1px solid #000;
+}
+#file_correlate  .create .string_value{
+    color:green;
+}
+#file_correlate  .drop .string_value{
+    color:#cc0000;
+    font-weight:bold;
+}
+#file_correlate  .place_correlate{
+    color:#955809;
+}
+
+/*Обновление и навигация*/
+#reset{
+    margin-bottom:20px;
+    display:block;
+    position:relative;
+}
+#reset a{
+    position:relative;
+    z-index:3;
+}
+#reset .host_name{
+    /*margin-left:100px;
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    padding-left:200px;
+    padding-right:200px;
+    margin:0;
+    text-align:center;
+    z-index:1;*/
+}
+#navigation{
+    padding-bottom:15px;
+}
+#navigation a{
+    margin-bottom:5px;
+    display:table-row;
+}
+#information .back{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+/*backup*/
+#main_backup form{
+    border-bottom:1px solid #000;
+    margin-bottom:15px;
+    padding-bottom:15px;
+}
+#main_backup form .table{
+    padding-bottom:0px;
+    
+}
+#table_selected .small{
+    font-size:12px;
+}
+#main_form .UNIX{
+    cursor:pointer;
+    border-bottom:1px dashed #000;
+    display:inline;
+}
+#main_form .form_box{
+    display:inline;
+    margin-right:10px;
+}
+#information  .form_box_top{
+    display:inline;
+    margin-right:10px;
+    float:right;
+}
+#UNIX{
+    position:fixed;
+    top:50%;
+    left:50%;
+}
+#UNIX table{
+    position:relative;
+    padding:20px;
+    border:1px solid #000;
+    text-align:center;
+    margin-left:-50%;
+    margin-top:-25%;
+    background:#fff;
+}
+#UNIX .close-button{
+    position:absolute;
+    top:5px;
+    right:10px;
+    cursor:pointer;
+    border:1px solid #000;
+    padding:1px 5px;
+    background:#fff;
+}
+#UNIX .file_name{
+    float:left;
+}
+#UNIX .permission{
+    padding-right:20px;
+}
+#UNIX .load{
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background:url(/media/iframe/loadingBar.gif) no-repeat center #fff;
+    display:none;
+}
+/*Имя файла*/
+#main_file #file_name{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+#main_file #massage{
+    font-size:18px;
+    color:green;
+    margin-bottom:10px;
+}
+
+#main_file #file_name .string{
+    font-size:20px;
+    font-weight:bold;
+}
+/*Настройки редактора*/
+#redactor_options{
+    border:1px solid #000;
+    margin:10px;
+    padding:10px;
+    display:table;
+    margin-left:0px;
+}
+#redactor_options h4{
+    margin:0;
+}
+#redactor_options form{
+    float:left;
+    margin-right:20px;
+}
+/*Редактор*/
+.ace-xcode{
+    font-family:"Courier New"  !important;
+}
+.ace-xcode  .ace_selection{
+    background:#C0C0C0 !important;
+}
+.ace-xcode  .ace_active-line{
+    background:#E8E8FF !important;
+}
+.ace-xcode  .ace_meta{
+    color:#0000FF !important;
+}
+.ace-xcode  .ace_attribute-name{
+    color:#FF0000 !important;
+    font-weight:bold;
+}
